@@ -10,6 +10,7 @@ import { useAccount } from '~/hooks/useAccount';
 
 export const FundTelegramAccess: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const [dislayUrl, setDislayUrl] = useState(null);
   const environment = useEnvironment()!;
   const account = useAccount();
 
@@ -31,29 +32,32 @@ export const FundTelegramAccess: React.FC = () => {
     try {
       setLoading(true);
 
-      const signedTransaction = await environment?.client.sign(
-        `I am the manager of the Melon fund ${account.fund}`,
-        account.address!
-      );
+      const signedTransaction = await environment?.client.sign(data.telegramId, account.address!);
 
-      const response = await fetch('http://localhost:8080/register', {
+      const res = await fetch('http://localhost:8080/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          fund: account.fund,
           address: account.address,
           telegramId: data.telegramId,
-          data: `I am the manager of the Melon fund ${account.fund}`,
           signedTransaction: signedTransaction,
         }),
       });
 
-      console.log(await response.json());
+      const response = await res.json();
+
+      if (response.error) {
+        form.setError('telegramId', response.message);
+        setLoading(false);
+        return;
+      }
 
       form.setValue('telegramId', '');
       setLoading(false);
+      setDislayUrl(response.message);
     } catch (e) {
       console.error(e);
+      form.setError('telegramId', e.message);
       setLoading(false);
     }
   });
@@ -61,16 +65,22 @@ export const FundTelegramAccess: React.FC = () => {
   return (
     <Block>
       <SectionTitle>Private Telegram Channel</SectionTitle>
-      <FormContext {...form}>
-        <form onSubmit={submit}>
-          <Input id="telegramId" name="telegramId" placeholder="Enter your telegram ID" type="text" />
-          <BlockActions>
-            <Button type="submit" loading={loading}>
-              Get Access
-            </Button>
-          </BlockActions>
-        </form>
-      </FormContext>
+      {dislayUrl ? (
+        <a href={dislayUrl!} target="_blank">
+          Get access to our private Telegram Channel
+        </a>
+      ) : (
+        <FormContext {...form}>
+          <form onSubmit={submit}>
+            <Input id="telegramId" name="telegramId" placeholder="Enter your telegram ID" type="text" />
+            <BlockActions>
+              <Button type="submit" loading={loading}>
+                Get Access
+              </Button>
+            </BlockActions>
+          </form>
+        </FormContext>
+      )}
     </Block>
   );
 };

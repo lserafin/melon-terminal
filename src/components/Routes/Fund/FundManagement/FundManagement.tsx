@@ -42,9 +42,11 @@ export const FundManagement: React.FC<FundManagementProps> = ({ address }) => (
 
       <GridRow>
         <FundReturnBatchToVault address={address} />
-        <GridCol xs={12} sm={6}>
-          <FundTelegramAccess />
-        </GridCol>
+        <RequiresFundNotShutDown fallback={false}>
+          <GridCol xs={12} sm={6}>
+            <FundTelegramAccess />
+          </GridCol>
+        </RequiresFundNotShutDown>
       </GridRow>
     </Grid>
   </RequiresFundManager>
