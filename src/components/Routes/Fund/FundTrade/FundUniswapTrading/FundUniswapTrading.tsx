@@ -134,9 +134,8 @@ export const FundUniswapTrading: React.FC<FundUniswapTradingProps> = props => {
     <>
       <Subtitle>
         Uniswap (<FormattedNumber value={1} suffix={state.taker.symbol} decimals={0} /> ={' '}
-        <FormattedNumber value={rate} suffix={state.maker.symbol} />)
-        <br></br>
-        <AssetPriceDifference maker={props.maker} taker={props.taker} price={rate}/>
+        <FormattedNumber value={rate} suffix={state.maker.symbol} />)<br></br>
+        <AssetPriceDifference maker={props.maker} taker={props.taker} price={rate} />
       </Subtitle>
       <Button type="button" disabled={!ready || !props.active} loading={loading} onClick={submit}>
         {loading ? (
