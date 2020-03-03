@@ -21,6 +21,7 @@ import { Button } from '~/storybook/components/Button/Button';
 import { catchError, map, expand, switchMapTo } from 'rxjs/operators';
 import { FormattedNumber } from '~/components/Common/FormattedNumber/FormattedNumber';
 import { TransactionDescription } from '~/components/Common/TransactionModal/TransactionDescription';
+import { AssetPriceDifference } from '../FundPriceDifference/FundPriceDifference';
 
 export interface FundKyberTradingProps {
   trading: string;
@@ -115,6 +116,7 @@ export const FundKyberTrading: React.FC<FundKyberTradingProps> = props => {
       <Subtitle>
         Kyber Network (<FormattedNumber value={1} suffix={state.taker.symbol} decimals={0} /> ={' '}
         <FormattedNumber value={rate} suffix={state.maker.symbol} />)
+        <AssetPriceDifference maker={props.maker} taker={props.taker} price={rate} />
       </Subtitle>
       <Button type="button" disabled={!ready || !props.active} loading={loading} onClick={submit}>
         {loading ? (
