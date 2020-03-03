@@ -10,7 +10,7 @@ import { useAccount } from '~/hooks/useAccount';
 
 export const FundTelegramAccess: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [dislayUrl, setDislayUrl] = useState(null);
+  const [dislayUrl, setDislayUrl] = useState<null | string>(null);
   const environment = useEnvironment()!;
   const account = useAccount();
 
@@ -54,7 +54,8 @@ export const FundTelegramAccess: React.FC = () => {
 
       form.setValue('telegramId', '');
       setLoading(false);
-      setDislayUrl(response.message);
+      const tt = `${response.message}?start=getCommand-123456`;
+      setDislayUrl(tt);
     } catch (e) {
       console.error(e);
       form.setError('telegramId', e.message);
