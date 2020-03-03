@@ -51,10 +51,10 @@ export const FundTelegramAccess: React.FC = () => {
         setLoading(false);
         return;
       }
-
+      // ?start=address:${account.address}
       form.setValue('telegramId', '');
       setLoading(false);
-      const tt = `${response.message}?start=getCommand-123456`;
+      const tt = `${response.message}?start=${account.address}`;
       setDislayUrl(tt);
     } catch (e) {
       console.error(e);

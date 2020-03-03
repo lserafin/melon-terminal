@@ -41,38 +41,38 @@ export const FundTrade: React.FC<FundTradeProps> = ({ address }) => {
   return (
     <Grid>
       {!loading && (!!providers.length || !!markets.length) && (
-        <RequiresFundManager fallback={false}>
-          <RequiresFundDeployedWithCurrentVersion address={address} fallback={false}>
-            <RequiresFundNotShutDown fallback={false}>
+        // <RequiresFundManager fallback={false}>
+        <RequiresFundDeployedWithCurrentVersion address={address} fallback={false}>
+          <RequiresFundNotShutDown fallback={false}>
+            <GridRow>
+              <GridCol>
+                <FundHoldings address={address} />
+              </GridCol>
+            </GridRow>
+            {!!markets.length && !!trading && (
               <GridRow>
                 <GridCol>
-                  <FundHoldings address={address} />
+                  <FundOrderbookTrading trading={trading} exchanges={markets} holdings={holdings} />
                 </GridCol>
               </GridRow>
-              {!!markets.length && !!trading && (
-                <GridRow>
-                  <GridCol>
-                    <FundOrderbookTrading trading={trading} exchanges={markets} holdings={holdings} />
-                  </GridCol>
-                </GridRow>
-              )}
-              {!!providers.length && !!trading && (
-                <GridRow>
-                  <GridCol>
-                    <FundLiquidityProviderTrading trading={trading} exchanges={providers} holdings={holdings} />
-                  </GridCol>
-                </GridRow>
-              )}
-              {!!rfq && !!trading && (
-                <GridRow>
-                  <GridCol>
-                    <FundRequestForQuoteTrading trading={trading} exchange={rfq} holdings={holdings} />
-                  </GridCol>
-                </GridRow>
-              )}
-            </RequiresFundNotShutDown>
-          </RequiresFundDeployedWithCurrentVersion>
-        </RequiresFundManager>
+            )}
+            {!!providers.length && !!trading && (
+              <GridRow>
+                <GridCol>
+                  <FundLiquidityProviderTrading trading={trading} exchanges={providers} holdings={holdings} />
+                </GridCol>
+              </GridRow>
+            )}
+            {!!rfq && !!trading && (
+              <GridRow>
+                <GridCol>
+                  <FundRequestForQuoteTrading trading={trading} exchange={rfq} holdings={holdings} />
+                </GridCol>
+              </GridRow>
+            )}
+          </RequiresFundNotShutDown>
+        </RequiresFundDeployedWithCurrentVersion>
+        // </RequiresFundManager>
       )}
 
       <GridRow>
