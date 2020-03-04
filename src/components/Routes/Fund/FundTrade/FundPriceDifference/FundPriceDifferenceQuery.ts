@@ -37,12 +37,11 @@ export const useAssetLastPriceUpdateQuery = (tokens: TokenDefinition[]) => {
       symbols,
     },
   };
+
   const result = useTheGraphQuery<AssetLastPriceUpdateQueryResult, AssetLastPriceUpdateQueryVariables>(
     AssetLastPriceUpdateQuery,
     options
   );
-  if (!result.loading) {
-  }
 
   const data = result.data && assembleLastPriceObject(result.data.assets);
 
