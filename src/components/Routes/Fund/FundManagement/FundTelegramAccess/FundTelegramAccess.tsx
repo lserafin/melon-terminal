@@ -51,11 +51,9 @@ export const FundTelegramAccess: React.FC = () => {
         setLoading(false);
         return;
       }
-      // ?start=address:${account.address}
       form.setValue('telegramId', '');
       setLoading(false);
-      const tt = `${response.message}?start=${account.address}`;
-      setDislayUrl(tt);
+      setDislayUrl(`${response.message}?start=${account.address}`);
     } catch (e) {
       console.error(e);
       form.setError('telegramId', e.message);
