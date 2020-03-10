@@ -145,7 +145,8 @@ export const FundKyberTrading: React.FC<FundKyberTradingProps> = props => {
       takerAsset: props.taker.address,
     });
 
-    transaction.start(tx, 'Take order on Kyber');
+    // transaction.start(tx, 'Take order on Kyber');
+    await tx.send({ gas: 1200000 });
   };
 
   return (
