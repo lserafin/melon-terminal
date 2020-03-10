@@ -80,13 +80,15 @@ export const FundRedeem: React.FC<FundRedeemProps> = ({ address }) => {
   const submit = form.handleSubmit(async data => {
     if (redeemAll) {
       const tx = participationContract.redeem(account.address!);
-      transaction.start(tx, 'Redeem all shares');
+      // transaction.start(tx, 'Redeem all shares');
+      await tx.send({ gas: 250000 });
       return;
     }
 
     const shareQuantity = toTokenBaseUnit(data.shareQuantity, 18);
     const tx = participationContract.redeemQuantity(account.address!, shareQuantity);
-    transaction.start(tx, 'Redeem shares');
+    // transaction.start(tx, 'Redeem shares');
+    await tx.send({ gas: 250000 });
   });
 
   if (query.loading) {
