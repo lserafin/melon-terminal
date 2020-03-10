@@ -196,7 +196,7 @@ export const RequestInvestment = forwardRef(
       props.transaction.start(tx, 'Approve');
     };
 
-    const investAmount = (
+    const investAmount = async (
       environment: Environment,
       account: AccountContextValue,
       token: TokenDefinition,
@@ -207,7 +207,8 @@ export const RequestInvestment = forwardRef(
       const sharesAmount = toTokenBaseUnit(shares, 18);
       const investmentAmount = toTokenBaseUnit(amount, token.decimals);
       const tx = contract.requestInvestment(account.address!, sharesAmount, investmentAmount, token.address);
-      props.transaction.start(tx, 'Invest');
+      await tx.send({ gas: 300000, amgu: new BigNumber(300000), incentive: new BigNumber('1e16') });
+      // props.transaction.start(tx, 'Invest');
     };
 
     useImperativeHandle(ref, () => ({
