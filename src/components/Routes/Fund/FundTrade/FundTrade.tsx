@@ -20,7 +20,7 @@ export interface FundTradeProps {
 
 export const FundTrade: React.FC<FundTradeProps> = ({ address }) => {
   const environment = useEnvironment()!;
-  const [exchanges, trading, exchangesQuery] = useFundTrading(address);
+  const [exchanges, denominationAsset, trading, policies, exchangesQuery] = useFundTrading(address);
   const [holdings, holdingsQuery] = useFundHoldingsQuery(address);
   const loading = exchangesQuery.loading || holdingsQuery.loading;
 
@@ -41,38 +41,56 @@ export const FundTrade: React.FC<FundTradeProps> = ({ address }) => {
   return (
     <Grid>
       {!loading && (!!providers.length || !!markets.length) && (
-        // <RequiresFundManager fallback={false}>
-        <RequiresFundDeployedWithCurrentVersion address={address} fallback={false}>
-          <RequiresFundNotShutDown fallback={false}>
-            <GridRow>
-              <GridCol>
-                <FundHoldings address={address} />
-              </GridCol>
-            </GridRow>
-            {!!markets.length && !!trading && (
+        <RequiresFundManager fallback={false}>
+          <RequiresFundDeployedWithCurrentVersion address={address} fallback={false}>
+            <RequiresFundNotShutDown fallback={false}>
               <GridRow>
                 <GridCol>
-                  <FundOrderbookTrading trading={trading} exchanges={markets} holdings={holdings} />
+                  <FundHoldings address={address} />
                 </GridCol>
               </GridRow>
-            )}
-            {!!providers.length && !!trading && (
-              <GridRow>
-                <GridCol>
-                  <FundLiquidityProviderTrading trading={trading} exchanges={providers} holdings={holdings} />
-                </GridCol>
-              </GridRow>
-            )}
-            {!!rfq && !!trading && (
-              <GridRow>
-                <GridCol>
-                  <FundRequestForQuoteTrading trading={trading} exchange={rfq} holdings={holdings} />
-                </GridCol>
-              </GridRow>
-            )}
-          </RequiresFundNotShutDown>
-        </RequiresFundDeployedWithCurrentVersion>
-        // </RequiresFundManager>
+              {!!markets.length && !!trading && (
+                <GridRow>
+                  <GridCol>
+                    <FundOrderbookTrading
+                      trading={trading}
+                      denominationAsset={denominationAsset}
+                      exchanges={markets}
+                      policies={policies}
+                      holdings={holdings}
+                    />
+                  </GridCol>
+                </GridRow>
+              )}
+              {!!providers.length && !!trading && (
+                <GridRow>
+                  <GridCol>
+                    <FundLiquidityProviderTrading
+                      trading={trading}
+                      denominationAsset={denominationAsset}
+                      exchanges={providers}
+                      policies={policies}
+                      holdings={holdings}
+                    />
+                  </GridCol>
+                </GridRow>
+              )}
+              {!!rfq && !!trading && (
+                <GridRow>
+                  <GridCol>
+                    <FundRequestForQuoteTrading
+                      trading={trading}
+                      denominationAsset={denominationAsset}
+                      exchange={rfq}
+                      policies={policies}
+                      holdings={holdings}
+                    />
+                  </GridCol>
+                </GridRow>
+              )}
+            </RequiresFundNotShutDown>
+          </RequiresFundDeployedWithCurrentVersion>
+        </RequiresFundManager>
       )}
 
       <GridRow>

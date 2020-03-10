@@ -89,9 +89,23 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
   };
 
   const currentStep = progressToStep(state.progress);
-  const errorReportingUri = encodeURI(
-    `https://github.com/avantgardefinance/melon-terminal/issues/new?title=Error in transaction "${state.name}";body=${error?.stack}`
-  );
+
+  if (error) {
+    error.issueUri = encodeURI(
+      `https://github.com/avantgardefinance/melon-terminal/issues/new?title=Error in transaction "${state.name}";` +
+        `body=` +
+        'Parameter|Value\n' +
+        '------|-----\n' +
+        (state.transaction?.contract?.address
+          ? `Contract|[${state.transaction?.contract?.address}](https://etherscan.io/address/${state.transaction?.contract?.address})\n`
+          : '') +
+        `Method|${state.transaction?.method}\n` +
+        (state.transaction?.args ? `Arguments|${JSON.stringify(state.transaction?.args)}\n` : '') +
+        `Sender|[${state.transaction?.from}](https://etherscan.io/address/${state.transaction?.from})\n` +
+        (hash ? `TxHash|[${hash}](https://etherscan.io/tx/${hash})\n` : '') +
+        (error?.stack ? `\nStack trace: ${error?.stack}` : '')
+    );
+  }
 
   return (
     <FormContext {...form}>
@@ -109,7 +123,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
               <NotificationBar kind="error">
                 <NotificationContent>{error.message}</NotificationContent>
                 <NotificationContent>
-                  <a href={errorReportingUri} target="_blank">
+                  <a href={error.issueUri} target="_blank">
                     Report error
                   </a>
                 </NotificationContent>
