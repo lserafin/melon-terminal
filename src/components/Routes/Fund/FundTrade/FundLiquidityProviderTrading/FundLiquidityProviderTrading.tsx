@@ -13,6 +13,10 @@ import { FundUniswapTrading } from '../FundUniswapTrading/FundUniswapTrading';
 import { Block } from '~/storybook/components/Block/Block';
 import { Grid, GridRow, GridCol } from '~/storybook/components/Grid/Grid';
 import { SectionTitle } from '~/storybook/components/Title/Title';
+import { NotificationBar, NotificationContent } from '~/storybook/components/NotificationBar/NotificationBar';
+import { useFund } from '~/hooks/useFund';
+import { Link } from '~/storybook/components/Link/Link';
+import { getNetworkName } from '~/config';
 
 export interface FundLiquidityProviderTradingProps {
   trading: string;
@@ -163,9 +167,23 @@ export const FundLiquidityProviderTrading: React.FC<FundLiquidityProviderTrading
     );
   }
 
+  const uniswapLegacyWarning =
+    props.exchanges.includes(environment.getExchange('UniswapOld')) &&
+    !props.exchanges.includes(environment.getExchange(ExchangeIdentifier.Uniswap));
+
   return (
     <Block>
       <SectionTitle>Liquidity Pool Trading</SectionTitle>
+
+      {uniswapLegacyWarning && (
+        <NotificationBar kind="error">
+          <NotificationContent>
+            We have deployed a bug fix for the Uniswap adapter. To continue trading on Uniswap, you have to{' '}
+            <Link to={`manage`}>register</Link> the new adapter in the <Link to={`manage`}>admin section</Link> of your
+            fund.
+          </NotificationContent>
+        </NotificationBar>
+      )}
 
       <FormContext {...form}>
         <Grid>

@@ -31,7 +31,7 @@ export const FundExchanges: React.FC<ExchangesProps> = ({ address }) => {
 
   const exchanges = useMemo(() => {
     const exchanges = details?.fund?.routes?.trading?.exchanges || [];
-    return exchanges.map(exchange => environment.getExchange(exchange.exchange!)).filter(exchange => !!exchange);
+    return exchanges.map(exchange => environment.getExchange(exchange as any)).filter(exchange => !!exchange);
   }, [details?.fund?.routes?.trading?.exchanges]);
 
   const exchangesRef = useRef(exchanges);
@@ -64,14 +64,12 @@ export const FundExchanges: React.FC<ExchangesProps> = ({ address }) => {
   }
 
   const options = environment.exchanges
-    .filter(exchange => {
-      return !exchange.historic || exchanges?.some(allowed => allowed.id === exchange.id);
-    })
+    .filter(exchange => !exchange.historic)
     .map(exchange => ({
       label: exchange.name,
       value: exchange.id,
       checked: !!exchanges?.some(allowed => allowed.id === exchange.id),
-      disabled: !!exchanges?.some(allowed => allowed.id === exchange.id) || exchange.historic,
+      disabled: !!exchanges?.some(allowed => allowed.id === exchange.id),
     }));
 
   const submit = form.handleSubmit(async data => {
