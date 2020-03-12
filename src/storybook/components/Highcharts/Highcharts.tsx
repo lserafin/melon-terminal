@@ -1,8 +1,18 @@
 import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { fromTokenBaseUnit } from '~/utils/fromTokenBaseUnit';
-import { fromUnixTime } from 'date-fns';
+import {formattedData} from '../chartData'
+
+console.log(formattedData);
+/**
+ * formattedData =
+ * [
+ *  {
+ *    name: string,
+ *    prices: [{price: BigNumber, timestamp: Date}]
+ *  }
+ * ]
+ */
 
 const options = {
   chart: {
@@ -171,20 +181,6 @@ const priceData = [
   },
 ];
 
-const formattedData = priceData.map(item => {
-  return {
-    price: fromTokenBaseUnit(item.sharePrice, 8),
-    date: fromUnixTime(parseInt(item.timestamp)),
-  };
-});
-
-/**
- * formattedData is an array of objects shaped like:
- * {
- *  price: BigNumber
- *  date: Mon Mar 09 2020 04:06:25 GMT-0400 (Eastern Daylight Time)
- * }
- */
 
 export const Highchart = () => {
   return <HighchartsReact highcharts={Highcharts} options={options} />;
