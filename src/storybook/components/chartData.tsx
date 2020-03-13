@@ -1,7 +1,388 @@
 import { fromTokenBaseUnit } from '~/utils/fromTokenBaseUnit';
-import { fromUnixTime, format} from 'date-fns';
+import { fromUnixTime, format } from 'date-fns';
+import { toTokenBaseUnit } from '~/utils/toTokenBaseUnit';
 
-const jsonData = [
+
+
+const assetPrices = [
+  // {
+  //   name: 'Wrapped BTC',
+  //   priceHistory: [
+  //     {
+  //       price: '38442108316238518623',
+  //       timestamp: '1581897328',
+  //     },
+  //     {
+  //       price: '36634052763117770197',
+  //       timestamp: '1581982860',
+  //     },
+  //     {
+  //       price: '36035949462379470476',
+  //       timestamp: '1582070168',
+  //     },
+  //     {
+  //       price: '36918448252420002515',
+  //       timestamp: '1582157578',
+  //     },
+  //     {
+  //       price: '37302649148073942430',
+  //       timestamp: '1582244889',
+  //     },
+  //     {
+  //       price: '37108726955558769113',
+  //       timestamp: '1582281970',
+  //     },
+  //     {
+  //       price: '36766203262140336972',
+  //       timestamp: '1582372882',
+  //     },
+  //     {
+  //       price: '36535935547782749406',
+  //       timestamp: '1582460198',
+  //     },
+  //     {
+  //       price: '36217593135730524084',
+  //       timestamp: '1582547600',
+  //     },
+  //     {
+  //       price: '36485870483536269137',
+  //       timestamp: '1582591183',
+  //     },
+  //     {
+  //       price: '36934605226867063509',
+  //       timestamp: '1582620126',
+  //     },
+  //     {
+  //       price: '36934605226867063509',
+  //       timestamp: '1582620160',
+  //     },
+  //     {
+  //       price: '36953214196501804698',
+  //       timestamp: '1582620311',
+  //     },
+  //     {
+  //       price: '38483577001396286601',
+  //       timestamp: '1582706461',
+  //     },
+  //     {
+  //       price: '38733317263793034400',
+  //       timestamp: '1582791986',
+  //     },
+  //     {
+  //       price: '38847953294350509170',
+  //       timestamp: '1582879322',
+  //     },
+  //     {
+  //       price: '38202269928204262169',
+  //       timestamp: '1582966666',
+  //     },
+  //     {
+  //       price: '38777217378553693363',
+  //       timestamp: '1583054001',
+  //     },
+  //     {
+  //       price: '39154426663347430732',
+  //       timestamp: '1583141313',
+  //     },
+  //     {
+  //       price: '38680641507306276127',
+  //       timestamp: '1583226834',
+  //     },
+  //     {
+  //       price: '38956091030318530245',
+  //       timestamp: '1583312357',
+  //     },
+  //     {
+  //       price: '38960766824354848457',
+  //       timestamp: '1583397898',
+  //     },
+  //     {
+  //       price: '38722544027930364244',
+  //       timestamp: '1583483478',
+  //     },
+  //     {
+  //       price: '38261072367733772701',
+  //       timestamp: '1583519098',
+  //     },
+  //     {
+  //       price: '38261072367733772701',
+  //       timestamp: '1583519114',
+  //     },
+  //     {
+  //       price: '38205088551557489392',
+  //       timestamp: '1583520841',
+  //     },
+  //     {
+  //       price: '38254274606121887948',
+  //       timestamp: '1583521838',
+  //     },
+  //     {
+  //       price: '37134807520605964419',
+  //       timestamp: '1583585773',
+  //     },
+  //     {
+  //       price: '38412241387484365996',
+  //       timestamp: '1583676639',
+  //     },
+  //     {
+  //       price: '39436488525296030285',
+  //       timestamp: '1583741185',
+  //     },
+  //   ],
+  // },
+  {
+    name: 'Multi-Collateral Dai',
+    priceHistory: [
+      {
+        price: '3799257779175368',
+        timestamp: '1581897328',
+      },
+      {
+        price: '3762400510843808',
+        timestamp: '1581982860',
+      },
+      {
+        price: '3534691817283398',
+        timestamp: '1582070168',
+      },
+      {
+        price: '3844101139421565',
+        timestamp: '1582157578',
+      },
+      {
+        price: '3900665166130502',
+        timestamp: '1582244889',
+      },
+      {
+        price: '3829165332561576',
+        timestamp: '1582281970',
+      },
+      {
+        price: '3820199784694252',
+        timestamp: '1582372882',
+      },
+      {
+        price: '3705012953736594',
+        timestamp: '1582460198',
+      },
+      {
+        price: '3678686738188178',
+        timestamp: '1582547600',
+      },
+      {
+        price: '3793814977017550',
+        timestamp: '1582591183',
+      },
+      {
+        price: '3862574309433285',
+        timestamp: '1582620126',
+      },
+      {
+        price: '3862574309433285',
+        timestamp: '1582620160',
+      },
+      {
+        price: '3862665743439904',
+        timestamp: '1582620311',
+      },
+      {
+        price: '4260167668793623',
+        timestamp: '1582706461',
+      },
+      {
+        price: '4391915157155075',
+        timestamp: '1582791986',
+      },
+      {
+        price: '4468026466362062',
+        timestamp: '1582879322',
+      },
+      {
+        price: '4406378735609623',
+        timestamp: '1582966666',
+      },
+      {
+        price: '4570555084794652',
+        timestamp: '1583054001',
+      },
+      {
+        price: '4548016443793555',
+        timestamp: '1583141313',
+      },
+      {
+        price: '4415274231637969',
+        timestamp: '1583226834',
+      },
+      {
+        price: '4427708282324972',
+        timestamp: '1583312357',
+      },
+      {
+        price: '4393156168597222',
+        timestamp: '1583397898',
+      },
+      {
+        price: '4261285826410931',
+        timestamp: '1583483478',
+      },
+      {
+        price: '4218985344840242',
+        timestamp: '1583519098',
+      },
+      {
+        price: '4218985344840242',
+        timestamp: '1583519114',
+      },
+      {
+        price: '4208604108317013',
+        timestamp: '1583520841',
+      },
+      {
+        price: '4213228501487494',
+        timestamp: '1583521838',
+      },
+      {
+        price: '4091636566527067',
+        timestamp: '1583585773',
+      },
+      {
+        price: '4441162198628110',
+        timestamp: '1583676639',
+      },
+      {
+        price: '4855169137497771',
+        timestamp: '1583741185',
+      },
+    ],
+  },
+  {
+    name: 'Melon Token',
+    priceHistory: [
+      {
+        price: '22384410289239250',
+        timestamp: '1581897328',
+      },
+      {
+        price: '21072828239583407',
+        timestamp: '1581982860',
+      },
+      {
+        price: '20685334469981525',
+        timestamp: '1582070168',
+      },
+      {
+        price: '19394654127988359',
+        timestamp: '1582157578',
+      },
+      {
+        price: '19811401861191069',
+        timestamp: '1582244889',
+      },
+      {
+        price: '19441946751242957',
+        timestamp: '1582281970',
+      },
+      {
+        price: '20161837136194371',
+        timestamp: '1582372882',
+      },
+      {
+        price: '19421249905039759',
+        timestamp: '1582460198',
+      },
+      {
+        price: '19473338957390458',
+        timestamp: '1582547600',
+      },
+      {
+        price: '18313400742881042',
+        timestamp: '1582591183',
+      },
+      {
+        price: '17954693267385410',
+        timestamp: '1582620126',
+      },
+      {
+        price: '17954693267385410',
+        timestamp: '1582620160',
+      },
+      {
+        price: '17954693267385410',
+        timestamp: '1582620311',
+      },
+      {
+        price: '20188962120378771',
+        timestamp: '1582706461',
+      },
+      {
+        price: '18639045703132262',
+        timestamp: '1582791986',
+      },
+      {
+        price: '18030861217064215',
+        timestamp: '1582879322',
+      },
+      {
+        price: '18409967107833223',
+        timestamp: '1582966666',
+      },
+      {
+        price: '19120225921695087',
+        timestamp: '1583054001',
+      },
+      {
+        price: '18769895671658714',
+        timestamp: '1583141313',
+      },
+      {
+        price: '18353179516551484',
+        timestamp: '1583226834',
+      },
+      {
+        price: '19135909096235856',
+        timestamp: '1583312357',
+      },
+      {
+        price: '19396407465817189',
+        timestamp: '1583397898',
+      },
+      {
+        price: '19034716191509828',
+        timestamp: '1583483478',
+      },
+      {
+        price: '19099528845377265',
+        timestamp: '1583519098',
+      },
+      {
+        price: '19099528845377265',
+        timestamp: '1583519114',
+      },
+      {
+        price: '19099528845377265',
+        timestamp: '1583520841',
+      },
+      {
+        price: '19103955968535646',
+        timestamp: '1583521838',
+      },
+      {
+        price: '19799123432289777',
+        timestamp: '1583585773',
+      },
+      {
+        price: '19489922260667411',
+        timestamp: '1583676639',
+      },
+      {
+        price: '19672016794953908',
+        timestamp: '1583741185',
+      },
+    ],
+  },
+];
+
+const fundData = [
   {
     calculationsHistory: [
       {
@@ -157,326 +538,24 @@ const jsonData = [
     ],
     name: 'AF MTC 4',
   },
-  {
-    calculationsHistory: [
-      {
-        sharePrice: '1336059701807781751',
-        timestamp: '1583741185',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1251023708072563936',
-        timestamp: '1583676639',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1181199247032517276',
-        timestamp: '1583585773',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1210502837016324683',
-        timestamp: '1583521838',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1209739412236262425',
-        timestamp: '1583520841',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1210982119692212145',
-        timestamp: '1583519114',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1210982125721101814',
-        timestamp: '1583519098',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1216848437935391733',
-        timestamp: '1583483478',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1247223694563029695',
-        timestamp: '1583397898',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1270109642928830556',
-        timestamp: '1583312357',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1257632644799076207',
-        timestamp: '1583226834',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1256546365450791334',
-        timestamp: '1583141313',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1255012719967292493',
-        timestamp: '1583054001',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1201002458021264388',
-        timestamp: '1582966666',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1218363298202437481',
-        timestamp: '1582879322',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1203701914111745250',
-        timestamp: '1582791986',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1171467394245499515',
-        timestamp: '1582706461',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1091398054617580322',
-        timestamp: '1582637426',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1091387739531606737',
-        timestamp: '1582620311',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1091368882609538982',
-        timestamp: '1582620160',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1091368894269353043',
-        timestamp: '1582620126',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1078897740457614817',
-        timestamp: '1582591183',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1058087258683469433',
-        timestamp: '1582547600',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1070217502728177430',
-        timestamp: '1582460198',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1079865703102223524',
-        timestamp: '1582372882',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1068752430635651077',
-        timestamp: '1582281970',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1077906780956971521',
-        timestamp: '1582244889',
-        validPrices: true,
-      },
-      {
-        sharePrice: '1045784906521199884',
-        timestamp: '1582157578',
-        validPrices: true,
-      },
-      {
-        sharePrice: '970955430970077097',
-        timestamp: '1582115544',
-        validPrices: true,
-      },
-      {
-        sharePrice: '977542595825848645',
-        timestamp: '1582111692',
-        validPrices: true,
-      },
-    ],
-    name: 'Flash Boys 3.0',
-  },
-  {
-    calculationsHistory: [
-      {
-        sharePrice: '1302504261318962670',
-        timestamp: '1583741185',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1285738512359202319',
-        timestamp: '1583676639',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1287618128346150365',
-        timestamp: '1583585773',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1285199286423395341',
-        timestamp: '1583521838',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1286776054638481205',
-        timestamp: '1583520841',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1285477737979416153',
-        timestamp: '1583519114',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1285477744347252438',
-        timestamp: '1583519098',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1280552253876689147',
-        timestamp: '1583483478',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1304373926112976662',
-        timestamp: '1583397898',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1318295046026785259',
-        timestamp: '1583312357',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1284186593698623021',
-        timestamp: '1583226834',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1235447501379825767',
-        timestamp: '1583141313',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1245169119849720399',
-        timestamp: '1583054001',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1149072529280546000',
-        timestamp: '1582966666',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1140944461068476426',
-        timestamp: '1582879322',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1116177992057029219',
-        timestamp: '1582791986',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1082666465582037641',
-        timestamp: '1582706461',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1082206625201060889',
-        timestamp: '1582620311',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1081927594688997748',
-        timestamp: '1582620160',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1082006980107752143',
-        timestamp: '1582620126',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1096071301346673039',
-        timestamp: '1582591183',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1105741659661532735',
-        timestamp: '1582547600',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1114826720700996054',
-        timestamp: '1582460198',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1099159281424183968',
-        timestamp: '1582372882',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1068049205066328592',
-        timestamp: '1582281970',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1054769811042087738',
-        timestamp: '1582244889',
-        validPrices: false,
-      },
-      {
-        sharePrice: '1021252046752493927',
-        timestamp: '1582157578',
-        validPrices: true,
-      },
-      {
-        sharePrice: '997017080076689687',
-        timestamp: '1582086024',
-        validPrices: true,
-      },
-      {
-        sharePrice: '995472142286284164',
-        timestamp: '1582075347',
-        validPrices: true,
-      },
-      {
-        sharePrice: '995955955067801565',
-        timestamp: '1582070168',
-        validPrices: true,
-      },
-    ],
-    name: 'NewFund',
-  },
 ];
 
-export const formattedData = jsonData.map(fund => {
+const formattedFundData = fundData.map(fund => {
   return {
     name: fund.name,
-    prices: fund.calculationsHistory.map(price => {
-      return {
-        price: fromTokenBaseUnit(price.sharePrice, 8),
-        timestamp: format(fromUnixTime(parseInt(price.timestamp)), 'dLLLyy'),
-      };
+    data: fund.calculationsHistory.map(price => {
+      return [format(fromUnixTime(parseInt(price.timestamp)), 'dMMMyy' ), fromTokenBaseUnit(price.sharePrice, 8).toNumber()];
     }),
   };
 });
+
+const formattedAssetData = assetPrices.map(asset => {
+  return {
+    name: asset.name,
+    data: asset.priceHistory.map(price => {
+      return [format(fromUnixTime(parseInt(price.timestamp)), 'dMMMyy'), fromTokenBaseUnit(price.price, 8).toNumber()];
+    }),
+  };
+});
+
+export const formattedData = formattedAssetData.concat(formattedFundData)
