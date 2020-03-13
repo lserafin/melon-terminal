@@ -1,8 +1,8 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-import {formattedData} from '../chartData'
+import { formattedData } from '../chartData';
 
-console.log(formattedData)
+console.log(formattedData);
 
 /**
  * formattedData =
@@ -15,10 +15,11 @@ console.log(formattedData)
  */
 
 const data = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-  datasets: [
-    {
-      label: 'My First dataset',
+  // just want a single array of dates
+  labels: formattedData[0].prices.map(item => item.timestamp),
+  datasets: formattedData.map(item => {
+    return {
+      label: item.name,
       fill: false,
       lineTension: 0.1,
       backgroundColor: 'rgba(75,192,192,0.4)',
@@ -36,10 +37,11 @@ const data = {
       pointHoverBorderWidth: 2,
       pointRadius: 1,
       pointHitRadius: 10,
-      data: [65, 59, 80, 81, 56, 55, 40],
-    },
-  ],
+      data: item.prices.map(item => item.price.toFixed(4)),
+    };
+  }),
 };
+
 
 export const ChartJs = () => {
   return <Line data={data} />;
