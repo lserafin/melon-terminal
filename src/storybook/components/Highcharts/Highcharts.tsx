@@ -12,56 +12,23 @@ const priceData = [
 ];
 
 const options: Highcharts.Options = {
-  // // rangeSelector: {
-  // //     selected: 4
-  // // },
-  // chart: {
-  //   type: 'line',
-  // },
-  // yAxis: {
-  //   labels: {
 
-  //   },
-  //   plotLines: [
-  //     {
-  //       value: 0,
-  //       width: 2,
-  //       color: 'silver',
-  //     },
-  //   ],
-  // },
-
-  // // xAxis: {
-  // //   type: 'datetime',
-  // //   labels: {
-  // //     formatter: function() {
-  // //       console.log(this);
-  // //       return this.value.toString();
-  // //     },
-  // //   },
-  // // },
-
-  // plotOptions: {
-  //   series: {
-  //     // compare: 'percent',
-  //     showInNavigator: true,
-  //   },
-  // },
-
-  // tooltip: {
-  //   pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-  //   valueDecimals: 2,
-  //   split: true,
-  // },
-
-  // series: formattedData,
   chart: {
-    type: 'spline'
+    type: 'spline',
   },
   xAxis: {
-    categories: formattedData[0].data.map(price => price[0]),
+    categories: formattedData[0].data.map(price => price[0].toString()),
   },
   series: formattedData,
+  title: {
+    text: 'Return Comparison',
+  },
+  tooltip: {
+    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+    valueDecimals: 2,
+    split: true,
+  },
+
 };
 
 export const Highchart = () => {
@@ -69,6 +36,6 @@ export const Highchart = () => {
 };
 
 // {
-// name: btc, 
+// name: btc,
 // data: [[date, price], [date, price]]
 // }
