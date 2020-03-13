@@ -3,7 +3,6 @@ import { ResponsiveLine } from '@nivo/line';
 import * as S from './Nivo.styles';
 import { formattedData } from '../chartData';
 
-
 console.log(formattedData);
 /**
  * formattedData =
@@ -15,289 +14,73 @@ console.log(formattedData);
  * ]
  */
 
-const data = 
-// formattedData.map(item => {
-//   return {
-//     id: item.name,
-//     data: item.prices.map(price => {
-//       return { x: price.timestamp , y: price.price.toString() };
-//     }),
-//   };
-// });
-// console.log(data)
+const data =
+  // formattedData.map(item => {
+  //   return {
+  //     id: item.name,
+  //     data: item.prices.map(price => {
+  //       return { x: price.timestamp , y: price.price.toString() };
+  //     }),
+  //   };
+  // });
+  // console.log(data)
 
-    [
-  {
-    id: 'japan',
-    color: 'hsl(164, 70%, 50%)',
-    data: [
-      {
-        x: 'plane',
-        y: 277,
-      },
-      {
-        x: 'helicopter',
-        y: 64,
-      },
-      {
-        x: 'boat',
-        y: 144,
-      },
-      {
-        x: 'train',
-        y: 218,
-      },
-      {
-        x: 'subway',
-        y: 90,
-      },
-      {
-        x: 'bus',
-        y: 213,
-      },
-      {
-        x: 'car',
-        y: 154,
-      },
-      {
-        x: 'moto',
-        y: 223,
-      },
-      {
-        x: 'bicycle',
-        y: 299,
-      },
-      {
-        x: 'horse',
-        y: 222,
-      },
-      {
-        x: 'skateboard',
-        y: 131,
-      },
-      {
-        x: 'others',
-        y: 273,
-      },
-    ],
-  },
-  {
-    id: 'france',
-    color: 'hsl(116, 70%, 50%)',
-    data: [
-      {
-        x: 'plane',
-        y: 36,
-      },
-      {
-        x: 'helicopter',
-        y: 66,
-      },
-      {
-        x: 'boat',
-        y: 145,
-      },
-      {
-        x: 'train',
-        y: 112,
-      },
-      {
-        x: 'subway',
-        y: 261,
-      },
-      {
-        x: 'bus',
-        y: 66,
-      },
-      {
-        x: 'car',
-        y: 2,
-      },
-      {
-        x: 'moto',
-        y: 282,
-      },
-      {
-        x: 'bicycle',
-        y: 77,
-      },
-      {
-        x: 'horse',
-        y: 35,
-      },
-      {
-        x: 'skateboard',
-        y: 193,
-      },
-      {
-        x: 'others',
-        y: 112,
-      },
-    ],
-  },
-  {
-    id: 'us',
-    color: 'hsl(286, 70%, 50%)',
-    data: [
-      {
-        x: 'plane',
-        y: 214,
-      },
-      {
-        x: 'helicopter',
-        y: 128,
-      },
-      {
-        x: 'boat',
-        y: 262,
-      },
-      {
-        x: 'train',
-        y: 266,
-      },
-      {
-        x: 'subway',
-        y: 75,
-      },
-      {
-        x: 'bus',
-        y: 66,
-      },
-      {
-        x: 'car',
-        y: 173,
-      },
-      {
-        x: 'moto',
-        y: 4,
-      },
-      {
-        x: 'bicycle',
-        y: 219,
-      },
-      {
-        x: 'horse',
-        y: 161,
-      },
-      {
-        x: 'skateboard',
-        y: 201,
-      },
-      {
-        x: 'others',
-        y: 78,
-      },
-    ],
-  },
-  {
-    id: 'germany',
-    color: 'hsl(245, 70%, 50%)',
-    data: [
-      {
-        x: 'plane',
-        y: 117,
-      },
-      {
-        x: 'helicopter',
-        y: 88,
-      },
-      {
-        x: 'boat',
-        y: 179,
-      },
-      {
-        x: 'train',
-        y: 13,
-      },
-      {
-        x: 'subway',
-        y: 213,
-      },
-      {
-        x: 'bus',
-        y: 241,
-      },
-      {
-        x: 'car',
-        y: 118,
-      },
-      {
-        x: 'moto',
-        y: 159,
-      },
-      {
-        x: 'bicycle',
-        y: 227,
-      },
-      {
-        x: 'horse',
-        y: 134,
-      },
-      {
-        x: 'skateboard',
-        y: 107,
-      },
-      {
-        x: 'others',
-        y: 231,
-      },
-    ],
-  },
-  {
-    id: 'norway',
-    color: 'hsl(185, 70%, 50%)',
-    data: [
-      {
-        x: 'plane',
-        y: 209,
-      },
-      {
-        x: 'helicopter',
-        y: 233,
-      },
-      {
-        x: 'boat',
-        y: 184,
-      },
-      {
-        x: 'train',
-        y: 137,
-      },
-      {
-        x: 'subway',
-        y: 56,
-      },
-      {
-        x: 'bus',
-        y: 158,
-      },
-      {
-        x: 'car',
-        y: 78,
-      },
-      {
-        x: 'moto',
-        y: 249,
-      },
-      {
-        x: 'bicycle',
-        y: 218,
-      },
-      {
-        x: 'horse',
-        y: 210,
-      },
-      {
-        x: 'skateboard',
-        y: 261,
-      },
-      {
-        x: 'others',
-        y: 288,
-      },
-    ],
-  },
-];
+  [
+    {
+      id: 'japan',
+      color: 'hsl(164, 70%, 50%)',
+      data: [
+        {
+          x: 'plane',
+          y: 277,
+        },
+        {
+          x: 'helicopter',
+          y: 64,
+        },
+        {
+          x: 'boat',
+          y: 144,
+        },
+        {
+          x: 'train',
+          y: 218,
+        },
+        {
+          x: 'subway',
+          y: 90,
+        },
+        {
+          x: 'bus',
+          y: 213,
+        },
+        {
+          x: 'car',
+          y: 154,
+        },
+        {
+          x: 'moto',
+          y: 223,
+        },
+        {
+          x: 'bicycle',
+          y: 299,
+        },
+        {
+          x: 'horse',
+          y: 222,
+        },
+        {
+          x: 'skateboard',
+          y: 131,
+        },
+        {
+          x: 'others',
+          y: 273,
+        },
+      ],
+    },
+  ];
 
 export const Nivo = () => {
   return (
