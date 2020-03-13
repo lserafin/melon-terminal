@@ -1,135 +1,136 @@
 import { fromTokenBaseUnit } from '~/utils/fromTokenBaseUnit';
 import { fromUnixTime, format } from 'date-fns';
 import { toTokenBaseUnit } from '~/utils/toTokenBaseUnit';
+import { calculateReturn } from '~/utils/finance';
 
 
 
 const assetPrices = [
-  // {
-  //   name: 'Wrapped BTC',
-  //   priceHistory: [
-  //     {
-  //       price: '38442108316238518623',
-  //       timestamp: '1581897328',
-  //     },
-  //     {
-  //       price: '36634052763117770197',
-  //       timestamp: '1581982860',
-  //     },
-  //     {
-  //       price: '36035949462379470476',
-  //       timestamp: '1582070168',
-  //     },
-  //     {
-  //       price: '36918448252420002515',
-  //       timestamp: '1582157578',
-  //     },
-  //     {
-  //       price: '37302649148073942430',
-  //       timestamp: '1582244889',
-  //     },
-  //     {
-  //       price: '37108726955558769113',
-  //       timestamp: '1582281970',
-  //     },
-  //     {
-  //       price: '36766203262140336972',
-  //       timestamp: '1582372882',
-  //     },
-  //     {
-  //       price: '36535935547782749406',
-  //       timestamp: '1582460198',
-  //     },
-  //     {
-  //       price: '36217593135730524084',
-  //       timestamp: '1582547600',
-  //     },
-  //     {
-  //       price: '36485870483536269137',
-  //       timestamp: '1582591183',
-  //     },
-  //     {
-  //       price: '36934605226867063509',
-  //       timestamp: '1582620126',
-  //     },
-  //     {
-  //       price: '36934605226867063509',
-  //       timestamp: '1582620160',
-  //     },
-  //     {
-  //       price: '36953214196501804698',
-  //       timestamp: '1582620311',
-  //     },
-  //     {
-  //       price: '38483577001396286601',
-  //       timestamp: '1582706461',
-  //     },
-  //     {
-  //       price: '38733317263793034400',
-  //       timestamp: '1582791986',
-  //     },
-  //     {
-  //       price: '38847953294350509170',
-  //       timestamp: '1582879322',
-  //     },
-  //     {
-  //       price: '38202269928204262169',
-  //       timestamp: '1582966666',
-  //     },
-  //     {
-  //       price: '38777217378553693363',
-  //       timestamp: '1583054001',
-  //     },
-  //     {
-  //       price: '39154426663347430732',
-  //       timestamp: '1583141313',
-  //     },
-  //     {
-  //       price: '38680641507306276127',
-  //       timestamp: '1583226834',
-  //     },
-  //     {
-  //       price: '38956091030318530245',
-  //       timestamp: '1583312357',
-  //     },
-  //     {
-  //       price: '38960766824354848457',
-  //       timestamp: '1583397898',
-  //     },
-  //     {
-  //       price: '38722544027930364244',
-  //       timestamp: '1583483478',
-  //     },
-  //     {
-  //       price: '38261072367733772701',
-  //       timestamp: '1583519098',
-  //     },
-  //     {
-  //       price: '38261072367733772701',
-  //       timestamp: '1583519114',
-  //     },
-  //     {
-  //       price: '38205088551557489392',
-  //       timestamp: '1583520841',
-  //     },
-  //     {
-  //       price: '38254274606121887948',
-  //       timestamp: '1583521838',
-  //     },
-  //     {
-  //       price: '37134807520605964419',
-  //       timestamp: '1583585773',
-  //     },
-  //     {
-  //       price: '38412241387484365996',
-  //       timestamp: '1583676639',
-  //     },
-  //     {
-  //       price: '39436488525296030285',
-  //       timestamp: '1583741185',
-  //     },
-  //   ],
-  // },
+  {
+    name: 'Wrapped BTC',
+    priceHistory: [
+      {
+        price: '38442108316238518623',
+        timestamp: '1581897328',
+      },
+      {
+        price: '36634052763117770197',
+        timestamp: '1581982860',
+      },
+      {
+        price: '36035949462379470476',
+        timestamp: '1582070168',
+      },
+      {
+        price: '36918448252420002515',
+        timestamp: '1582157578',
+      },
+      {
+        price: '37302649148073942430',
+        timestamp: '1582244889',
+      },
+      {
+        price: '37108726955558769113',
+        timestamp: '1582281970',
+      },
+      {
+        price: '36766203262140336972',
+        timestamp: '1582372882',
+      },
+      {
+        price: '36535935547782749406',
+        timestamp: '1582460198',
+      },
+      {
+        price: '36217593135730524084',
+        timestamp: '1582547600',
+      },
+      {
+        price: '36485870483536269137',
+        timestamp: '1582591183',
+      },
+      {
+        price: '36934605226867063509',
+        timestamp: '1582620126',
+      },
+      {
+        price: '36934605226867063509',
+        timestamp: '1582620160',
+      },
+      {
+        price: '36953214196501804698',
+        timestamp: '1582620311',
+      },
+      {
+        price: '38483577001396286601',
+        timestamp: '1582706461',
+      },
+      {
+        price: '38733317263793034400',
+        timestamp: '1582791986',
+      },
+      {
+        price: '38847953294350509170',
+        timestamp: '1582879322',
+      },
+      {
+        price: '38202269928204262169',
+        timestamp: '1582966666',
+      },
+      {
+        price: '38777217378553693363',
+        timestamp: '1583054001',
+      },
+      {
+        price: '39154426663347430732',
+        timestamp: '1583141313',
+      },
+      {
+        price: '38680641507306276127',
+        timestamp: '1583226834',
+      },
+      {
+        price: '38956091030318530245',
+        timestamp: '1583312357',
+      },
+      {
+        price: '38960766824354848457',
+        timestamp: '1583397898',
+      },
+      {
+        price: '38722544027930364244',
+        timestamp: '1583483478',
+      },
+      {
+        price: '38261072367733772701',
+        timestamp: '1583519098',
+      },
+      {
+        price: '38261072367733772701',
+        timestamp: '1583519114',
+      },
+      {
+        price: '38205088551557489392',
+        timestamp: '1583520841',
+      },
+      {
+        price: '38254274606121887948',
+        timestamp: '1583521838',
+      },
+      {
+        price: '37134807520605964419',
+        timestamp: '1583585773',
+      },
+      {
+        price: '38412241387484365996',
+        timestamp: '1583676639',
+      },
+      {
+        price: '39436488525296030285',
+        timestamp: '1583741185',
+      },
+    ],
+  },
   {
     name: 'Multi-Collateral Dai',
     priceHistory: [
@@ -541,19 +542,22 @@ const fundData = [
 ];
 
 const formattedFundData = fundData.map(fund => {
+  const dayZeroPrice = fromTokenBaseUnit(fund.calculationsHistory[0].sharePrice, 8)
+
   return {
     name: fund.name,
     data: fund.calculationsHistory.map(price => {
-      return [format(fromUnixTime(parseInt(price.timestamp)), 'dMMMyy' ), fromTokenBaseUnit(price.sharePrice, 8).toNumber()];
+      return [format(fromUnixTime(parseInt(price.timestamp)), 'dMMMyy' ), calculateReturn(fromTokenBaseUnit(price.sharePrice, 8), dayZeroPrice).toNumber()];
     }),
   };
 });
 
 const formattedAssetData = assetPrices.map(asset => {
+  const dayZeroPrice = fromTokenBaseUnit(asset.priceHistory[0].price, 8)
   return {
     name: asset.name,
     data: asset.priceHistory.map(price => {
-      return [format(fromUnixTime(parseInt(price.timestamp)), 'dMMMyy'), fromTokenBaseUnit(price.price, 8).toNumber()];
+      return [format(fromUnixTime(parseInt(price.timestamp)), 'dMMMyy'), calculateReturn(fromTokenBaseUnit(price.price, 8), dayZeroPrice).toNumber()];
     }),
   };
 });
